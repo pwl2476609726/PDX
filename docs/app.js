@@ -130,17 +130,9 @@ function createOptionMarkup(product, option, optionIndex) {
 
 function createProductPaymentMarkup(product) {
   const soldOut = !product.isActive || product.stock <= 0;
-  const selectedOption = getSelectedOption(product);
 
   return `
     <div class="product-payment-shell">
-      <div class="product-payment-summary">
-        <div class="product-payment-copy">
-          <span class="product-payment-label">当前规格</span>
-          <strong class="product-payment-name">${selectedOption.label}</strong>
-        </div>
-        <span class="product-payment-price">${formatCurrency(selectedOption.priceCents)}</span>
-      </div>
       <div class="product-payment-actions">
         <button
           class="pay-button pay-button-alipay"

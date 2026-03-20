@@ -628,41 +628,7 @@ button {
   border: 1px solid var(--line);
   border-radius: 20px;
   background: rgba(245, 246, 251, 0.94);
-  padding: 16px;
-}
-
-.product-payment-summary {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 12px;
-}
-
-.product-payment-copy {
-  display: grid;
-  gap: 4px;
-}
-
-.product-payment-label {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.product-payment-name {
-  font-size: 18px;
-  line-height: 1.4;
-}
-
-.product-payment-price {
-  color: var(--price);
-  font-size: 34px;
-  font-weight: 900;
-  line-height: 1;
-  white-space: nowrap;
+  padding: 14px;
 }
 
 .product-payment-actions {
@@ -945,7 +911,6 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .product-payment-summary,
   .product-payment-foot {
     flex-direction: column;
     align-items: flex-start;
