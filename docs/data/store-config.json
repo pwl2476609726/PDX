@@ -27,7 +27,7 @@
       "contactHref": "https://t.me/pandaxia1227",
       "divider": "购买须知",
       "rules": [
-        "请填写新的购买须知"
+        "拍下24h内发货。可联系客服了解详情"
       ],
       "warning": "付款完成后请联系客服，说明购买商品和规格。"
     }
@@ -53,10 +53,10 @@
     {
       "id": "gemini-pro-family",
       "name": "Gemini Pro家庭组（美区）",
-      "description": "加5r可解决国家和地区不一致的问题。",
+      "description": "含质保\n加5r可解决国家和地区不一致的问题。",
       "image": "",
       "coverTheme": "gemini",
-      "stock": 12,
+      "stock": 1,
       "statusLabel": "人工处理",
       "isActive": true,
       "sortOrder": 1,
@@ -84,7 +84,7 @@
       "description": "均为永久有效期",
       "image": "./assets/products/anyrouter-api-token.png",
       "coverTheme": "router",
-      "stock": 50,
+      "stock": 925,
       "statusLabel": "人工处理",
       "isActive": true,
       "sortOrder": 2,
@@ -113,10 +113,10 @@
     {
       "id": "antigravity-pro-family",
       "name": "Antigravity Pro家庭组",
-      "description": "纯现场手搓 1 主号 + 5 副号的 Pro 家庭组。获取账号、Pro 充值、拉家庭组、手机号验证等中间过程全包。",
+      "description": "纯现场手搓 1 主号 + 5 副号的 Pro 家庭组。获取账号、Pro 充值、拉家庭组、手机号验证等中间过程全包。\n总额度堪比Ultar会员，价格更便宜，提供账号管理工具，一键切换账号。\n因手搓涉及材料成本，拍下概不退换。",
       "image": "./assets/products/antigravity-pro-family.png",
       "coverTheme": "antigravity",
-      "stock": 6,
+      "stock": 2,
       "statusLabel": "人工处理",
       "isActive": true,
       "sortOrder": 3,
@@ -134,7 +134,7 @@
         },
         {
           "label": "12个月有效期",
-          "priceCents": 15000
+          "priceCents": 15800
         }
       ]
     }
