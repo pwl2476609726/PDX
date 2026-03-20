@@ -25,6 +25,37 @@ docs/index.html
 - 客服信息展示区
 - GitHub Pages 可直接托管
 
+### 本地可视化编辑入口
+
+如果你要在本机可视化修改商品展示页信息，现在直接运行：
+
+```bash
+npm run dev
+```
+
+然后打开：
+
+```text
+http://localhost:3000/admin/site-content
+```
+
+这个页面不依赖数据库，只在本地开发环境开放。你可以在里面修改：
+
+- 购买须知
+- 收款码
+- 客服信息
+- 商品图片
+- 商品名称
+- 商品简介
+- 商品库存
+- 多规格价格
+
+保存后会直接同步到：
+
+- `docs/data/store-config.json`
+- `docs/assets/pay/`
+- `docs/assets/products/`
+
 ### 你需要替换的内容
 
 1. 收款码图片：

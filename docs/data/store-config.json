@@ -1,0 +1,138 @@
+{
+  "site": {
+    "brand": {
+      "title": "最新AI大模型获取",
+      "subtitle": "潘大虾の小店"
+    },
+    "nav": {
+      "shopping": "含AI模型、Gmail邮箱等服务"
+    }
+  },
+  "paymentChannels": {
+    "alipay": {
+      "label": "支付宝付款",
+      "image": "./assets/pay/支付宝付款码.jpg",
+      "helper": "请使用支付宝扫码付款。"
+    },
+    "wechat": {
+      "label": "微信付款",
+      "image": "./assets/pay/微信付款码.jpg",
+      "helper": "请使用微信扫码付款。"
+    }
+  },
+  "announcements": [
+    {
+      "contactLabel": "客服联系方式",
+      "contactText": "TG号：https://t.me/pandaxia1227",
+      "contactHref": "https://t.me/pandaxia1227",
+      "divider": "购买须知",
+      "rules": [
+        "请填写新的购买须知"
+      ],
+      "warning": "付款完成后请联系客服，说明购买商品和规格。"
+    }
+  ],
+  "contact": [
+    {
+      "label": "QQ 客服",
+      "value": "QQ：2476609726",
+      "description": "（推荐）下单后可通过 QQ 联系核单与后续处理。"
+    },
+    {
+      "label": "微信客服",
+      "value": "微信：PDX2476609726",
+      "description": "推荐使用微信联系，方便确认付款与跟进处理。"
+    },
+    {
+      "label": "Telegram",
+      "value": "TG：@pandaxia1227",
+      "description": "也可以通过 Telegram 联系，适合外网环境下沟通。"
+    }
+  ],
+  "products": [
+    {
+      "id": "gemini-pro-family",
+      "name": "Gemini Pro家庭组（美区）",
+      "description": "（加5r可解决国家和地区不一致的问题。）\n2027年03月19日到期（12r/个）",
+      "image": "",
+      "coverTheme": "gemini",
+      "stock": 12,
+      "statusLabel": "人工处理",
+      "isActive": true,
+      "sortOrder": 1,
+      "keywords": [
+        "gemini",
+        "家庭组",
+        "pro",
+        "谷歌",
+        "到期"
+      ],
+      "options": [
+        {
+          "label": "0011",
+          "priceCents": 1200
+        }
+      ]
+    },
+    {
+      "id": "anyrouter-api-token",
+      "name": "AnyRouter API令牌",
+      "description": "价格说明：\n18r  = 100刀\n30r  = 200刀\n50r  = 400刀\n均为永久有效期",
+      "image": "./assets/products/anyrouter-api-token.png",
+      "coverTheme": "router",
+      "stock": 50,
+      "statusLabel": "人工处理",
+      "isActive": true,
+      "sortOrder": 2,
+      "keywords": [
+        "anyrouter",
+        "api",
+        "令牌",
+        "100刀",
+        "额度"
+      ],
+      "options": [
+        {
+          "label": "111",
+          "priceCents": 1800
+        },
+        {
+          "label": "新规格",
+          "priceCents": 3000
+        },
+        {
+          "label": "新规格",
+          "priceCents": 5000
+        }
+      ]
+    },
+    {
+      "id": "antigravity-pro-family",
+      "name": "Antigravity Pro家庭组",
+      "description": "纯现场手搓 1 主号 + 5 副号的 Pro 家庭组。获取账号、Pro 充值、拉家庭组、手机号验证等中间过程全包。",
+      "image": "./assets/products/antigravity-pro-family.png",
+      "coverTheme": "antigravity",
+      "stock": 6,
+      "statusLabel": "人工处理",
+      "isActive": true,
+      "sortOrder": 3,
+      "keywords": [
+        "antigravity",
+        "pro",
+        "家庭组",
+        "4个月",
+        "1年"
+      ],
+      "options": [
+        {
+          "label": "4个月有效期",
+          "priceCents": 8800
+        },
+        {
+          "label": "1年有效期",
+          "priceCents": 15000
+        }
+      ]
+    }
+  ]
+}

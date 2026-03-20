@@ -1,115 +1,4 @@
-const storeConfig = {
-  site: {
-    brand: {
-      title: "Gemini Ai 服务收款页",
-      subtitle: "静态公开页 · 人工处理",
-    },
-    nav: {
-      shopping: "购物",
-    },
-  },
-  paymentChannels: {
-    alipay: {
-      label: "支付宝付款",
-      image: "./assets/pay/支付宝付款码.jpg",
-      helper: "请使用支付宝扫码付款。",
-    },
-    wechat: {
-      label: "微信付款",
-      image: "./assets/pay/微信付款码.jpg",
-      helper: "请使用微信扫码付款。",
-    },
-  },
-  announcements: [
-    {
-      contactLabel: "客服联系方式",
-      contactText: "TG号：https://t.me/pandaxia1227",
-      contactHref: "https://t.me/pandaxia1227",
-      divider: "购买须知",
-      rules: [
-        "服务说明：本页仅用于商品展示和人工收款，付款后请联系客服人工确认。",
-        "测试建议：如有具体使用要求，请先沟通商品适用范围，再完成付款。",
-        "安全提醒：收货后请及时完成你需要的安全设置或资料补全。",
-        "售后说明：请优先说明购买规格、支付渠道、支付时间与联系方式，方便客服核单。",
-        "合规警告：请在合法合规范围内使用购买内容，因不当使用导致的问题需自行承担。",
-      ],
-      warning:
-        "付款完成后请立即联系客服，说明购买商品、规格、支付渠道和支付时间。",
-    },
-  ],
-  contact: [
-    {
-      label: "QQ 客服",
-      value: "QQ：2476609726",
-      description: "下单后可通过 QQ 联系核单与后续处理。",
-    },
-    {
-      label: "微信客服",
-      value: "微信：PDX2476609726",
-      description: "推荐使用微信联系，方便确认付款与跟进处理。",
-    },
-    {
-      label: "Telegram",
-      value: "TG：@pandaxia1227",
-      description: "也可以通过 Telegram 联系，适合外网环境下沟通。",
-    },
-  ],
-  products: [
-    {
-      id: "gemini-pro-family",
-      coverTheme: "gemini",
-      name: "Gemini Pro家庭组（20XX年XX月XX日到期）",
-      status: "人工处理",
-      description:
-        "首期按照人工处理流程交付。付款后请联系客服，并说明购买商品与支付时间。",
-      keywords: ["gemini", "家庭组", "pro", "谷歌", "到期"],
-      options: [
-        {
-          label: "标准版",
-          priceCents: 1000,
-        },
-      ],
-    },
-    {
-      id: "anyrouter-api-token",
-      coverTheme: "router",
-      name: "AnyRouter API令牌",
-      status: "人工处理",
-      description:
-        "价格说明：12r = 100刀。付款后请联系客服，人工确认后继续处理。",
-      keywords: ["anyrouter", "api", "令牌", "100刀", "额度"],
-      options: [
-        {
-          label: "100刀额度",
-          priceCents: 1200,
-        },
-      ],
-    },
-    {
-      id: "antigravity-pro-family",
-      coverTheme: "antigravity",
-      name: "Antigravity Pro家庭组",
-      status: "人工处理",
-      description:
-        "纯现场手搓 1 主号 + 5 副号的 Pro 家庭组。获取账号、Pro 充值、拉家庭组、手机号验证等中间过程全包。",
-      keywords: ["antigravity", "pro", "家庭组", "1个月", "4个月", "1年"],
-      options: [
-        {
-          label: "1个月有效期",
-          priceCents: 5000,
-        },
-        {
-          label: "4个月有效期",
-          priceCents: 8800,
-        },
-        {
-          label: "1年有效期",
-          priceCents: 15000,
-        },
-      ],
-    },
-  ],
-};
+let storeConfig = null;
 
 const brandTitle = document.getElementById("brand-title");
 const brandSubtitle = document.getElementById("brand-subtitle");
@@ -128,9 +17,6 @@ const modalQrImage = document.getElementById("modal-qr-image");
 const modalChannelLabel = document.getElementById("modal-channel-label");
 const modalHelper = document.getElementById("modal-helper");
 const modalContactNote = document.getElementById("modal-contact-note");
-const toast = document.getElementById("toast");
-
-let toastTimer = null;
 
 function formatCurrency(cents) {
   return new Intl.NumberFormat("zh-CN", {
@@ -146,20 +32,19 @@ function setBrand() {
   navShopping.textContent = storeConfig.site.nav.shopping;
 }
 
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("is-visible");
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => {
-    toast.classList.remove("is-visible");
-  }, 2200);
-}
-
 function createCoverMarkup(product) {
+  if (product.image) {
+    return `
+      <div class="product-cover cover-theme-image">
+        <img class="product-cover-image" src="${product.image}" alt="${product.name}" loading="lazy" />
+      </div>
+    `;
+  }
+
   if (product.coverTheme === "router") {
     return `
       <div class="product-cover cover-theme-router">
-        <span class="cover-badge">${product.status}</span>
+        <span class="cover-badge">${product.statusLabel}</span>
         <div class="cover-body">
           <div class="router-chip-row">
             <span class="router-chip">API</span>
@@ -176,7 +61,7 @@ function createCoverMarkup(product) {
   if (product.coverTheme === "antigravity") {
     return `
       <div class="product-cover cover-theme-antigravity">
-        <span class="cover-badge">${product.status}</span>
+        <span class="cover-badge">${product.statusLabel}</span>
         <div class="cover-body">
           <div class="ring-stack" aria-hidden="true">
             <span></span>
@@ -192,7 +77,7 @@ function createCoverMarkup(product) {
 
   return `
     <div class="product-cover cover-theme-gemini">
-      <span class="cover-badge">${product.status}</span>
+      <span class="cover-badge">${product.statusLabel}</span>
       <div class="cover-body">
         <div class="cover-mark">
           <span class="gem-star" aria-hidden="true">✦</span>
@@ -205,6 +90,7 @@ function createCoverMarkup(product) {
 }
 
 function createOptionMarkup(product, option) {
+  const soldOut = !product.isActive || product.stock <= 0;
   return `
     <div class="option-card">
       <div class="option-meta">
@@ -215,7 +101,7 @@ function createOptionMarkup(product, option) {
         <button
           class="pay-button pay-button-alipay"
           type="button"
-          data-open-payment
+          ${soldOut ? "disabled" : "data-open-payment"}
           data-product-id="${product.id}"
           data-option-label="${option.label}"
           data-price-cents="${option.priceCents}"
@@ -226,7 +112,7 @@ function createOptionMarkup(product, option) {
         <button
           class="pay-button pay-button-wechat"
           type="button"
-          data-open-payment
+          ${soldOut ? "disabled" : "data-open-payment"}
           data-product-id="${product.id}"
           data-option-label="${option.label}"
           data-price-cents="${option.priceCents}"
@@ -236,8 +122,8 @@ function createOptionMarkup(product, option) {
         </button>
       </div>
       <div class="option-foot">
-        <span>处理：人工确认</span>
-        <span>交付：联系客服</span>
+        <span>库存：${product.stock}</span>
+        <span>${soldOut ? "状态：已售罄" : "交付：联系客服"}</span>
       </div>
     </div>
   `;
@@ -322,7 +208,7 @@ function renderProducts(query = "") {
         <article class="product-card">
           ${createCoverMarkup(product)}
           <div class="product-body">
-            <span class="status-pill">${product.status}</span>
+            <span class="status-pill">${product.stock > 0 ? product.statusLabel : "已售罄"}</span>
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
             <div class="option-list">
@@ -395,7 +281,25 @@ searchInput.addEventListener("input", (event) => {
   renderProducts(event.target.value);
 });
 
-setBrand();
-renderAnnouncements();
-renderContacts();
-renderProducts();
+async function loadConfig() {
+  const response = await fetch("./data/store-config.json", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("加载商品配置失败。");
+  }
+
+  storeConfig = await response.json();
+  setBrand();
+  renderAnnouncements();
+  renderContacts();
+  renderProducts();
+}
+
+loadConfig().catch((error) => {
+  console.error(error);
+  catalogSummary.textContent = "配置加载失败，请检查 docs/data/store-config.json";
+  emptyState.hidden = false;
+  emptyState.innerHTML = `
+    <h2>商品配置加载失败</h2>
+    <p>请检查 docs/data/store-config.json 是否存在且格式正确。</p>
+  `;
+});
