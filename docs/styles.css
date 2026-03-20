@@ -350,20 +350,9 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 14px;
   padding: 18px;
-}
-
-.category-pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 38px;
-  padding: 0 16px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(139, 124, 246, 0.12), rgba(139, 124, 246, 0.22));
-  color: var(--accent-strong);
-  font-weight: 800;
 }
 
 .catalog-summary {
@@ -424,19 +413,6 @@ button {
   width: 120px;
   height: 120px;
   background: rgba(255, 255, 255, 0.22);
-}
-
-.cover-badge {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  font-size: 12px;
-  font-weight: 800;
 }
 
 .cover-body {
@@ -546,20 +522,8 @@ button {
   padding: 16px 16px 18px;
 }
 
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  padding: 0 10px;
-  border-radius: 999px;
-  background: rgba(98, 210, 162, 0.16);
-  color: var(--success-text);
-  font-size: 12px;
-  font-weight: 800;
-}
-
 .product-name {
-  margin: 12px 0 8px;
+  margin: 0 0 8px;
   font-size: 19px;
   line-height: 1.42;
 }
@@ -583,6 +547,28 @@ button {
   padding: 14px;
 }
 
+.option-card-selectable {
+  width: 100%;
+  text-align: left;
+  background: rgba(248, 249, 252, 0.88);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.option-card-selectable:hover {
+  border-color: rgba(139, 124, 246, 0.34);
+  box-shadow: 0 10px 24px rgba(17, 19, 27, 0.06);
+}
+
+.option-card-selectable.is-selected {
+  border-color: rgba(139, 124, 246, 0.56);
+  background: linear-gradient(180deg, rgba(243, 240, 255, 0.96), rgba(248, 249, 252, 0.94));
+  box-shadow: 0 12px 28px rgba(111, 92, 231, 0.12);
+}
+
 .option-meta {
   display: flex;
   gap: 12px;
@@ -600,12 +586,6 @@ button {
   font-size: 32px;
   font-weight: 900;
   line-height: 1;
-}
-
-.option-actions {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .pay-button {
@@ -635,6 +615,63 @@ button {
 }
 
 .option-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.product-payment-shell {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(245, 246, 251, 0.94);
+  padding: 16px;
+}
+
+.product-payment-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.product-payment-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.product-payment-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-payment-name {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.product-payment-price {
+  color: var(--price);
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.product-payment-actions {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.product-payment-foot {
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -905,6 +942,16 @@ button {
   }
 
   .option-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .product-payment-summary,
+  .product-payment-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-payment-actions {
     grid-template-columns: 1fr;
   }
 

@@ -137,6 +137,28 @@
           "priceCents": 15800
         }
       ]
+    },
+    {
+      "id": "product-mmzesv1o-nr6q28",
+      "name": "2022-2024年Gmail邮箱",
+      "description": "只批发，10个起售。\n建议先咨询客服有没有货，再拍。",
+      "image": "./assets/products/product-mmzesv1o-nr6q28.png",
+      "coverTheme": "gemini",
+      "stock": 85,
+      "statusLabel": "人工处理",
+      "isActive": true,
+      "sortOrder": 4,
+      "keywords": [],
+      "options": [
+        {
+          "label": "随机国家IP，10个账号",
+          "priceCents": 5000
+        },
+        {
+          "label": "美国IP，10个账号",
+          "priceCents": 6000
+        }
+      ]
     }
   ]
 }

@@ -1,4 +1,6 @@
 let storeConfig = null;
+let selectedOptions = {};
+let currentQuery = "";
 
 const brandTitle = document.getElementById("brand-title");
 const brandSubtitle = document.getElementById("brand-subtitle");
@@ -32,6 +34,23 @@ function setBrand() {
   navShopping.textContent = storeConfig.site.nav.shopping;
 }
 
+function ensureSelectedOptions() {
+  const nextSelectedOptions = {};
+
+  for (const product of storeConfig.products) {
+    const selectedIndex = selectedOptions[product.id] ?? 0;
+    const maxIndex = Math.max(product.options.length - 1, 0);
+    nextSelectedOptions[product.id] = Math.min(selectedIndex, maxIndex);
+  }
+
+  selectedOptions = nextSelectedOptions;
+}
+
+function getSelectedOption(product) {
+  const optionIndex = selectedOptions[product.id] ?? 0;
+  return product.options[optionIndex] || product.options[0];
+}
+
 function createCoverMarkup(product) {
   if (product.image) {
     return `
@@ -44,7 +63,6 @@ function createCoverMarkup(product) {
   if (product.coverTheme === "router") {
     return `
       <div class="product-cover cover-theme-router">
-        <span class="cover-badge">${product.statusLabel}</span>
         <div class="cover-body">
           <div class="router-chip-row">
             <span class="router-chip">API</span>
@@ -61,7 +79,6 @@ function createCoverMarkup(product) {
   if (product.coverTheme === "antigravity") {
     return `
       <div class="product-cover cover-theme-antigravity">
-        <span class="cover-badge">${product.statusLabel}</span>
         <div class="cover-body">
           <div class="ring-stack" aria-hidden="true">
             <span></span>
@@ -77,7 +94,6 @@ function createCoverMarkup(product) {
 
   return `
     <div class="product-cover cover-theme-gemini">
-      <span class="cover-badge">${product.statusLabel}</span>
       <div class="cover-body">
         <div class="cover-mark">
           <span class="gem-star" aria-hidden="true">✦</span>
@@ -89,22 +105,48 @@ function createCoverMarkup(product) {
   `;
 }
 
-function createOptionMarkup(product, option) {
-  const soldOut = !product.isActive || product.stock <= 0;
+function createOptionMarkup(product, option, optionIndex) {
+  const isSelected = (selectedOptions[product.id] ?? 0) === optionIndex;
   return `
-    <div class="option-card">
+    <button
+      class="option-card option-card-selectable ${isSelected ? "is-selected" : ""}"
+      type="button"
+      data-select-option
+      data-product-id="${product.id}"
+      data-option-index="${optionIndex}"
+      aria-pressed="${isSelected ? "true" : "false"}"
+    >
       <div class="option-meta">
         <span class="option-name">${option.label}</span>
         <span class="option-price">${formatCurrency(option.priceCents)}</span>
       </div>
-      <div class="option-actions">
+      <div class="option-foot">
+        <span>${isSelected ? "已选中" : "点击选择该规格"}</span>
+        <span>库存：${product.stock}</span>
+      </div>
+    </button>
+  `;
+}
+
+function createProductPaymentMarkup(product) {
+  const soldOut = !product.isActive || product.stock <= 0;
+  const selectedOption = getSelectedOption(product);
+
+  return `
+    <div class="product-payment-shell">
+      <div class="product-payment-summary">
+        <div class="product-payment-copy">
+          <span class="product-payment-label">当前规格</span>
+          <strong class="product-payment-name">${selectedOption.label}</strong>
+        </div>
+        <span class="product-payment-price">${formatCurrency(selectedOption.priceCents)}</span>
+      </div>
+      <div class="product-payment-actions">
         <button
           class="pay-button pay-button-alipay"
           type="button"
           ${soldOut ? "disabled" : "data-open-payment"}
           data-product-id="${product.id}"
-          data-option-label="${option.label}"
-          data-price-cents="${option.priceCents}"
           data-channel="alipay"
         >
           支付宝付款
@@ -114,14 +156,12 @@ function createOptionMarkup(product, option) {
           type="button"
           ${soldOut ? "disabled" : "data-open-payment"}
           data-product-id="${product.id}"
-          data-option-label="${option.label}"
-          data-price-cents="${option.priceCents}"
           data-channel="wechat"
         >
           微信付款
         </button>
       </div>
-      <div class="option-foot">
+      <div class="product-payment-foot">
         <span>库存：${product.stock}</span>
         <span>${soldOut ? "状态：已售罄" : "交付：联系客服"}</span>
       </div>
@@ -186,6 +226,8 @@ function getSearchText(product) {
 }
 
 function renderProducts(query = "") {
+  currentQuery = query;
+  ensureSelectedOptions();
   const normalizedQuery = query.trim().toLowerCase();
   const filteredProducts = storeConfig.products.filter((product) => {
     if (!normalizedQuery) {
@@ -208,12 +250,16 @@ function renderProducts(query = "") {
         <article class="product-card">
           ${createCoverMarkup(product)}
           <div class="product-body">
-            <span class="status-pill">${product.stock > 0 ? product.statusLabel : "已售罄"}</span>
             <h3 class="product-name">${product.name}</h3>
             <p class="product-description">${product.description}</p>
             <div class="option-list">
-              ${product.options.map((option) => createOptionMarkup(product, option)).join("")}
+              ${product.options
+                .map((option, optionIndex) =>
+                  createOptionMarkup(product, option, optionIndex),
+                )
+                .join("")}
             </div>
+            ${createProductPaymentMarkup(product)}
           </div>
         </article>
       `,
@@ -237,7 +283,7 @@ function openModal(productId, optionLabel, priceCents, channelId) {
   modalChannelLabel.textContent = channel.label;
   modalHelper.textContent = `${channel.helper} 付款后请联系客服，并说明购买商品、规格、支付渠道和支付时间。`;
   modalContactNote.textContent =
-    "请发送：购买商品、规格、支付渠道、支付时间。客服确认收款后会继续人工处理。";
+    "请发送：购买商品、规格、支付渠道、支付时间。客服确认收款后会继续处理并完成交付。";
 
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
@@ -256,12 +302,29 @@ document.addEventListener("click", (event) => {
     return;
   }
 
-  if (target.matches("[data-open-payment]")) {
+  const optionButton = target.closest("[data-select-option]");
+  if (optionButton instanceof HTMLElement) {
+    selectedOptions[optionButton.dataset.productId] = Number(
+      optionButton.dataset.optionIndex || 0,
+    );
+    renderProducts(currentQuery);
+    return;
+  }
+
+  const paymentButton = target.closest("[data-open-payment]");
+  if (paymentButton instanceof HTMLElement) {
+    const product = storeConfig.products.find(
+      (item) => item.id === paymentButton.dataset.productId,
+    );
+    const selectedOption = product ? getSelectedOption(product) : null;
+    if (!product || !selectedOption) {
+      return;
+    }
     openModal(
-      target.dataset.productId,
-      target.dataset.optionLabel,
-      target.dataset.priceCents,
-      target.dataset.channel,
+      product.id,
+      selectedOption.label,
+      selectedOption.priceCents,
+      paymentButton.dataset.channel,
     );
   }
 
@@ -288,6 +351,7 @@ async function loadConfig() {
   }
 
   storeConfig = await response.json();
+  ensureSelectedOptions();
   setBrand();
   renderAnnouncements();
   renderContacts();

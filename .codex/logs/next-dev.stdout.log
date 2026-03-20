@@ -179,3 +179,5 @@ Validation Error Count: 1
  POST /api/admin/site-content/save 200 in 15ms (next.js: 3ms, application-code: 12ms)
  POST /api/admin/site-content/save 200 in 21ms (next.js: 5ms, application-code: 16ms)
  POST /api/admin/site-content/save 200 in 22ms (next.js: 7ms, application-code: 14ms)
+ POST /api/admin/site-content/save 200 in 77ms (next.js: 39ms, application-code: 38ms)
+ GET /api/admin/site-content/asset?path=.%2Fassets%2Fproducts%2Fproduct-mmzesv1o-nr6q28.png 200 in 14ms (next.js: 5ms, application-code: 9ms)
