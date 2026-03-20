@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>服务售卖与人工收款页</title>
+    <meta
+      name="description"
+      content="接近商城样式的 GitHub Pages 静态收款页。访客可以浏览商品、筛选关键词、查看支付宝或微信收款码，并在付款后联系客服。"
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-bg">
+      <div class="backdrop-orb orb-left"></div>
+      <div class="backdrop-orb orb-right"></div>
+      <div class="backdrop-sheet"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand-lockup" href="#products" aria-label="前往商品区">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span class="brand-copy">
+            <strong id="brand-title">服务售卖页</strong>
+            <span id="brand-subtitle">人工收款与人工处理</span>
+          </span>
+        </a>
+
+        <nav class="top-nav" aria-label="主导航">
+          <a id="nav-shopping" href="#products">购物</a>
+        </nav>
+
+        <div class="topbar-actions">
+          <label class="search-shell" aria-label="搜索商品">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input
+              id="search-input"
+              type="search"
+              autocomplete="off"
+              placeholder="搜索商品名关键词..."
+            />
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="announcement-shell" id="notice">
+        <div class="panel-title">
+          <span aria-hidden="true">📢</span>
+          <span>公告</span>
+        </div>
+        <div id="announcement-list" class="announcement-list"></div>
+      </section>
+
+      <section class="catalog-shell" id="products">
+        <div class="panel-title">
+          <span aria-hidden="true">🛒</span>
+          <span>购买</span>
+        </div>
+
+        <div class="catalog-meta">
+          <div class="category-pill" id="catalog-pill">人工处理商品</div>
+          <p class="catalog-summary" id="catalog-summary">
+            当前显示全部商品
+          </p>
+        </div>
+
+        <div id="empty-state" class="empty-state" hidden>
+          <h2>没有找到匹配商品</h2>
+          <p>换个关键词再试，例如 Gemini、AnyRouter、1年、Pro。</p>
+        </div>
+
+        <div id="product-list" class="product-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="contact-shell" id="contact">
+        <div class="panel-title">
+          <span aria-hidden="true">☎</span>
+          <span>联系客服</span>
+        </div>
+
+        <div class="contact-banner">
+          下单后请联系客服，并说明购买商品、规格、支付渠道和支付时间。
+        </div>
+
+        <div id="contact-list" class="contact-grid"></div>
+      </section>
+
+      <section class="info-shell">
+        <div class="info-card">
+          <h2>付款流程</h2>
+          <ol class="info-list">
+            <li>先在上方商品区选择商品与规格。</li>
+            <li>点击支付宝付款或微信付款，会弹出对应收款码。</li>
+            <li>扫码付款后，请联系客服并告知购买内容与支付时间。</li>
+            <li>客服确认收款后，会继续人工处理并完成交付。</li>
+          </ol>
+        </div>
+        <div class="info-card">
+          <h2>说明</h2>
+          <ul class="info-list">
+            <li>当前页面是 GitHub Pages 静态页，不提供自动订单系统。</li>
+            <li>页面不会自动识别你是否已付款，也不会自动发货。</li>
+            <li>收款码图片和客服信息都可以后续继续替换。</li>
+            <li>如需自动核销或自动发货，后续需要回到服务器部署路线。</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <div
+      id="payment-modal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <button
+          class="modal-close"
+          type="button"
+          aria-label="关闭弹窗"
+          data-close-modal
+        >
+          ×
+        </button>
+        <p class="modal-kicker" id="modal-channel-label">付款方式</p>
+        <h3 id="modal-product-name">商品名称</h3>
+        <p id="modal-option-label" class="modal-option">规格信息</p>
+        <div class="modal-price" id="modal-price">¥0</div>
+        <img
+          id="modal-qr-image"
+          class="modal-qr"
+          src=""
+          alt="收款码"
+          width="320"
+          height="320"
+        />
+        <p class="modal-helper" id="modal-helper">
+          请扫码付款。付款后请联系客服，并说明购买商品与支付时间。
+        </p>
+        <div class="modal-contact-box">
+          <strong>下单后请联系客服</strong>
+          <p id="modal-contact-note">
+            请发送：购买商品、规格、支付渠道、支付时间。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

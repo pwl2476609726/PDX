@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum InventoryStatus {
+  AVAILABLE
+  RESERVED
+  DELIVERED
+  DISABLED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FULFILLED
+  EXPIRED
+  FAILED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  ALIPAY
+  WECHAT
+}
+
+enum PaymentStatus {
+  CREATED
+  PENDING
+  NOTIFIED
+  VERIFIED
+  FAILED
+}
+
+enum FulfillmentMode {
+  MANUAL
+  AUTO_STOCK
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?   @db.Text
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Product {
+  id              String            @id @default(cuid())
+  categoryId      String
+  category        Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  name            String
+  slug            String            @unique
+  summary         String
+  description     String            @db.Text
+  supportPolicy   String            @db.Text
+  deliveryFormat  String            @db.Text
+  badge           String?
+  fulfillmentMode FulfillmentMode   @default(MANUAL)
+  isActive        Boolean           @default(true)
+  isFeatured      Boolean           @default(false)
+  sortOrder       Int               @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  options         ProductOption[]
+  inventoryItems  InventoryItem[]
+  orders          Order[]
+
+  @@index([categoryId, isActive, sortOrder])
+}
+
+model ProductOption {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  label      String
+  priceCents Int
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  orders     Order[]
+
+  @@index([productId, isActive, sortOrder])
+}
+
+model InventoryItem {
+  id                   String          @id @default(cuid())
+  productId            String
+  product              Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderId              String?
+  order                Order?          @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  status               InventoryStatus @default(AVAILABLE)
+  encryptedPayload     String          @db.Text
+  payloadPreview       String
+  metadata             Json?
+  reservedAt           DateTime?
+  reservationExpiresAt DateTime?
+  deliveredAt          DateTime?
+  disabledAt           DateTime?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+
+  @@index([productId, status, createdAt])
+  @@index([orderId, status])
+}
+
+model Order {
+  id                  String            @id @default(cuid())
+  orderNo             String            @unique
+  productId           String
+  product             Product           @relation(fields: [productId], references: [id], onDelete: Restrict)
+  productOptionId     String?
+  productOption       ProductOption?    @relation(fields: [productOptionId], references: [id], onDelete: SetNull)
+  productOptionLabel  String
+  unitPriceCents      Int
+  quantity            Int
+  amountCents         Int
+  buyerContact        String
+  queryPasswordHash   String
+  status              OrderStatus       @default(PENDING)
+  paymentProvider     PaymentProvider
+  fulfillmentMode     FulfillmentMode
+  providerTransaction String?
+  expiresAt           DateTime
+  paidAt              DateTime?
+  fulfilledAt         DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  inventoryItems      InventoryItem[]
+  paymentRecords      PaymentRecord[]
+  fulfillmentRecord   FulfillmentRecord?
+
+  @@index([buyerContact, createdAt(sort: Desc)])
+  @@index([status, expiresAt])
+  @@index([productId, productOptionId])
+}
+
+model PaymentRecord {
+  id                  String          @id @default(cuid())
+  orderId             String
+  order               Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider            PaymentProvider
+  status              PaymentStatus
+  eventType           String
+  providerTransaction String?
+  requestPayload      Json?
+  responsePayload     Json?
+  notifiedAt          DateTime?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([orderId, createdAt(sort: Desc)])
+  @@index([provider, providerTransaction])
+}
+
+model FulfillmentRecord {
+  id                String   @id @default(cuid())
+  orderId           String   @unique
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  deliveredCount    Int
+  encryptedSnapshot String   @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  body      String   @db.Text
+  isActive  Boolean  @default(true)
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, pinned, createdAt(sort: Desc)])
+}

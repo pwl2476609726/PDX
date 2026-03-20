@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6efe4;
+  --foreground: #241714;
+  --surface: rgba(255, 250, 244, 0.72);
+  --surface-strong: #fff9f1;
+  --primary: #8f3028;
+  --primary-strong: #641d18;
+  --accent: #d1a86b;
+  --muted: #8a7568;
+  --line: rgba(73, 41, 30, 0.12);
+  --success: #1e7b52;
+  --warning: #ad6a1f;
+  --danger: #b63c31;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(209, 168, 107, 0.22), transparent 32%),
+    radial-gradient(circle at top right, rgba(143, 48, 40, 0.16), transparent 36%),
+    linear-gradient(180deg, #fbf6ef 0%, #f4ecdf 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+::selection {
+  background: rgba(143, 48, 40, 0.18);
+}
+
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 48px rgba(65, 33, 24, 0.08);
+}
+
+.section-title {
+  font-family: var(--font-display), serif;
+  letter-spacing: -0.04em;
+}
+
+.field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 244, 0.9);
+  padding: 0.9rem 1rem;
+  color: var(--foreground);
+  outline: none;
+}
+
+.field:focus {
+  border-color: rgba(143, 48, 40, 0.5);
+  box-shadow: 0 0 0 4px rgba(143, 48, 40, 0.08);
+}
+
+.btn-primary {
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+  color: white;
+  box-shadow: 0 12px 32px rgba(111, 35, 28, 0.18);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 38px rgba(111, 35, 28, 0.24);
+}
+
+.btn-secondary {
+  border-radius: 999px;
+  border: 1px solid rgba(143, 48, 40, 0.18);
+  background: rgba(255, 249, 241, 0.76);
+}
+
+.fade-in {
+  animation: fadeInUp 480ms ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
