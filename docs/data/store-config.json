@@ -53,7 +53,7 @@
     {
       "id": "gemini-pro-family",
       "name": "Gemini Pro家庭组（美区）",
-      "description": "含质保\n加5r可解决国家和地区不一致的问题。",
+      "description": "到期前均有质保\n加5r可解决国家和地区不一致的问题。",
       "image": "",
       "coverTheme": "gemini",
       "stock": 1,
@@ -73,7 +73,7 @@
           "priceCents": 500
         },
         {
-          "label": "2027年03月19日到期",
+          "label": "拉你进家庭组（2027.03.19到期）",
           "priceCents": 1200
         }
       ]
