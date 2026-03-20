@@ -53,7 +53,7 @@
     {
       "id": "gemini-pro-family",
       "name": "Gemini Pro家庭组（美区）",
-      "description": "（加5r可解决国家和地区不一致的问题。）\n2027年03月19日到期（12r/个）",
+      "description": "加5r可解决国家和地区不一致的问题。",
       "image": "",
       "coverTheme": "gemini",
       "stock": 12,
@@ -69,7 +69,11 @@
       ],
       "options": [
         {
-          "label": "0011",
+          "label": "解决国家和地区不一致的问题",
+          "priceCents": 500
+        },
+        {
+          "label": "2027年03月19日到期",
           "priceCents": 1200
         }
       ]
@@ -77,7 +81,7 @@
     {
       "id": "anyrouter-api-token",
       "name": "AnyRouter API令牌",
-      "description": "价格说明：\n18r  = 100刀\n30r  = 200刀\n50r  = 400刀\n均为永久有效期",
+      "description": "均为永久有效期",
       "image": "./assets/products/anyrouter-api-token.png",
       "coverTheme": "router",
       "stock": 50,
@@ -93,15 +97,15 @@
       ],
       "options": [
         {
-          "label": "111",
+          "label": "100刀",
           "priceCents": 1800
         },
         {
-          "label": "新规格",
+          "label": "200刀",
           "priceCents": 3000
         },
         {
-          "label": "新规格",
+          "label": "400刀",
           "priceCents": 5000
         }
       ]
@@ -129,7 +133,7 @@
           "priceCents": 8800
         },
         {
-          "label": "1年有效期",
+          "label": "12个月有效期",
           "priceCents": 15000
         }
       ]
